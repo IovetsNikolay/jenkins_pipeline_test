@@ -20,7 +20,7 @@ pipeline {
             steps {
                 CONTAINER_ID = sh 'docker run -d -e NAME=${NAME} -e AGE=${AGE} -p 8081:80 ${IMAGE_NAME}:${IMAGE_TAG}'
 		sh 'docker exec -ti ${CONTAINER_ID} /bin/sh'
-		cat /usr/share/nginx/html/index.html
+		sh 'cat /usr/share/nginx/html/index.html'
             echo "Test"
             }
         }
