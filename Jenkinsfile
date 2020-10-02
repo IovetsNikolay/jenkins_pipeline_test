@@ -19,7 +19,7 @@ pipeline {
         
         stage('Test') {
             steps {
-                sh 'docker run -d -e NAME=${NAME} -e AGE=${AGE} -p 8080:80 ${IMAGE_NAME}:${IMAGE_TAG}'
+                sh 'docker run -d -e NAME=${NAME} -e AGE=${AGE} -p 8081:80 ${IMAGE_NAME}:${IMAGE_TAG}'
             echo "Test"
             }
         }
