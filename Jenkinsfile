@@ -39,12 +39,18 @@ pipeline {
             echo 'This will run only if successful'
             node("master") {
                 mail to: 'iovetsnikolay@gmail.com',
-                        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "Something is wrong with ${env.BUILD_URL}"
+                        subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Build ${env.BUILD_URL} is success"
             }
         }
         failure {
             echo 'This will run only if failed'
+            node("master") {
+                mail to: 'iovetsnikolay@gmail.com',
+                        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Something is wrong with ${env.BUILD_URL}"
+            }
+
         }
     }
 
