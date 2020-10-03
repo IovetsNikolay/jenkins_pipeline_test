@@ -14,7 +14,7 @@ pipeline {
                 script {
                     app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
                 }
-                echo getDate()
+		echo $JENKINS_BASE_URL
                 echo "Build"
             }
         }
