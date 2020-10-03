@@ -3,17 +3,14 @@ import java.time.format.DateTimeFormatter
 
 pipeline {
     agent any
-    environment {
-        // COMMIT_ID="""${sh(returnStdout: true, script: 'git rev-parse --short HEAD')}"""
-        CONTAINER_ID = ''
-        app = ''
-    }
     stages {
         stage('Build') {
             steps {
                 script {
                     app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                    properties([pipelineTriggers([pollSCM('*/1 * * * *')])])
                 }
+                git branch: 'master', credentialsId: '9abcf84f-08f7-4c19-b21d-5d2e860f4563', url: 'https://github.com/IovetsNikolay/jenkins_pipeline_test'
                 echo "Build"
             }
         }
@@ -29,9 +26,9 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                docker.withRegistry('https://registry.hub.docker.com', '${DOCKER_CREDS}') {
-                    app.push(getDate())
-                }
+                    docker.withRegistry('https://registry.hub.docker.com', '${DOCKER_CREDS}') {
+                        app.push(getDate())
+                    }
                 }
                 echo "Push"
             }
@@ -41,6 +38,6 @@ pipeline {
 }
 
 String getDate() {
-    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");  
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");
     return LocalDateTime.now().format(f)
 }
