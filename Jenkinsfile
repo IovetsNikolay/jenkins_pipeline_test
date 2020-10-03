@@ -10,8 +10,7 @@ pipeline {
             steps {
                 script {
                     app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-		echo "TimeStamp: ${currentBuild.startTimeInMillis}"
-                }
+		    echo "TimeStamp: ${Util.getTimeSpanString(System.currentTimeMillis())}"                }
                 echo "Build"
             }
         }
