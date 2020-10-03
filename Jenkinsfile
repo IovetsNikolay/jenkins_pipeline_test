@@ -34,10 +34,21 @@ pipeline {
             }
         }
     }
+    post {
+        success {
+            echo 'This will run only if successful'
+            mail to: 'indicow@gmail.com',
+                    subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "Something is wrong with ${env.BUILD_URL}"
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+    }
 
 }
 
 String getDate() {
-    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");  
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");
     return LocalDateTime.now().format(f)
 }
