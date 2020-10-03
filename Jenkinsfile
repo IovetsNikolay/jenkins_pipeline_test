@@ -1,3 +1,6 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 pipeline {
     agent any
     environment {
@@ -11,7 +14,7 @@ pipeline {
                 script {
                     app = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
                 }
-                echo "TimeStamp: ${Util.getTimeSpanString(System.currentTimeMillis())}"
+                echo getDate()
                 echo "Build"
             }
         }
@@ -28,7 +31,7 @@ pipeline {
             steps {
                 //script {
                 //docker.withRegistry('https://registry.hub.docker.com', '${DOCKER_CREDS}') {
-                //    app.push("${env.BUILD_ID}-${COMMIT_ID}")                
+                //    app.push("${env.BUILD_ID}-${COMMIT_ID}")
                 //}
                 //}
                 echo "Push"
@@ -36,4 +39,9 @@ pipeline {
         }
     }
 
+}
+
+public String getDate() {
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");
+    return LocalDateTime.now().format(f)
 }
