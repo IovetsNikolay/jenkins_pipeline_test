@@ -38,6 +38,6 @@ pipeline {
 }
 
 String getDate() {
-    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");
+    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");  
     return LocalDateTime.now().format(f)
 }
