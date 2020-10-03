@@ -29,11 +29,11 @@ pipeline {
 
         stage('Push') {
             steps {
-                //script {
-                //docker.withRegistry('https://registry.hub.docker.com', '${DOCKER_CREDS}') {
-                //    app.push("${env.BUILD_ID}-${COMMIT_ID}")
-                //}
-                //}
+                script {
+                docker.withRegistry('https://registry.hub.docker.com', '${DOCKER_CREDS}') {
+                    app.push("${env.BUILD_ID}-getDate()")
+                }
+                }
                 echo "Push"
             }
         }
@@ -41,7 +41,7 @@ pipeline {
 
 }
 
-public String getDate() {
+String getDate() {
     DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm");
     return LocalDateTime.now().format(f)
 }
